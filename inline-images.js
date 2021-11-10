@@ -93,14 +93,14 @@ function createDirFromPath(path) {
 }
 
 function getHTTPBase64(url, callback) {
-	const filename = url.split('?')[0].split('/').pop();
-	const dir = process.cwd();
-	const url_md5 = crypto.createHash('md5').update(url).digest('hex');
-	const filepath = `${dir}/src/data/${url_md5}/${filename}`;
-	const destDir = createDirFromPath(filepath);
+    console.log(url);
 
-	// console.log(url);
-	// console.log(filepath);
+    const filename = url.split('?')[0].split('/').pop();
+    const dir = process.cwd();
+    const url_md5 = crypto.createHash('md5').update(url).digest('hex');
+    const filepath = `${dir}/src/data/${url_md5}/${filename}`;
+    const destDir = createDirFromPath(filepath);
+    console.log(filepath);
 
     // Get applicable library
     var lib = url.startsWith('https') ? https : http;
@@ -130,7 +130,7 @@ function getHTTPBase64(url, callback) {
 
         // Done callback
         res.on('end', () => {
-		  	fs.writeFileSync(filepath, body);
+            fs.writeFileSync(filepath, body);
             callback(null, body.toString('base64'), format)
         });
 
